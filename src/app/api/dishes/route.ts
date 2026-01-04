@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener platos
 export async function GET(request: Request) {
@@ -24,6 +24,7 @@ export async function GET(request: Request) {
       where.category = category;
     }
 
+    const prisma = await getPrisma();
     const dishes = await prisma.dish.findMany({
       where,
       include: {
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const prisma = await getPrisma();
     const dish = await prisma.dish.create({
       data: {
         name,

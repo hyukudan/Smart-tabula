@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // DELETE - Eliminar notificación
 export async function DELETE(
@@ -15,6 +15,7 @@ export async function DELETE(
 
     const { id } = await params;
 
+    const prisma = await getPrisma();
     const notification = await prisma.notification.findFirst({
       where: {
         id,

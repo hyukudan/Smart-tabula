@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
+    const prisma = await getPrisma();
     // Test database connection
     await prisma.$queryRaw`SELECT 1`;
 

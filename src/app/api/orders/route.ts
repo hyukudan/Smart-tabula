@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener pedidos del usuario
 export async function GET(request: Request) {
@@ -33,6 +33,7 @@ export async function GET(request: Request) {
       }
     }
 
+    const prisma = await getPrisma();
     const orders = await prisma.order.findMany({
       where,
       include: {
@@ -76,6 +77,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const prisma = await getPrisma();
     // Obtener el menú para la fecha
     const menu = await prisma.menu.findUnique({
       where: { id: menuId },
@@ -153,6 +155,7 @@ export async function PUT(request: Request) {
       );
     }
 
+    const prisma = await getPrisma();
     // Verificar que el pedido pertenece al usuario
     const existingOrder = await prisma.order.findFirst({
       where: {

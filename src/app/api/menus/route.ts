@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener menús
 export async function GET(request: Request) {
@@ -26,6 +26,7 @@ export async function GET(request: Request) {
       where.isPublished = true;
     }
 
+    const prisma = await getPrisma();
     const menus = await prisma.menu.findMany({
       where,
       include: {
@@ -88,6 +89,7 @@ export async function POST(request: Request) {
     const menuDate = new Date(date);
     menuDate.setHours(0, 0, 0, 0);
 
+    const prisma = await getPrisma();
     // Check if menu already exists for this date
     const existingMenu = await prisma.menu.findFirst({
       where: { date: menuDate },

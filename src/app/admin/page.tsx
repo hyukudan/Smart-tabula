@@ -4,7 +4,7 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 async function getAdminStats() {
+  const prisma = await getPrisma();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

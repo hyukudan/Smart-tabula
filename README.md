@@ -37,7 +37,7 @@ Smart Tabula is a comprehensive solution for managing daily menus, food orders, 
 | Language | TypeScript |
 | UI Components | shadcn/ui + Radix UI |
 | Styling | Tailwind CSS 4 |
-| Database | SQLite (via Prisma 6) |
+| Database | SQLite / PostgreSQL (via Prisma 7) |
 | Authentication | NextAuth.js v5 |
 | State Management | TanStack Query |
 | Containerization | Docker + Docker Compose |
@@ -166,10 +166,21 @@ smart-tabula/
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DATABASE_URL` | SQLite database path | `file:./dev.db` |
+| `DATABASE_URL` | Database connection URL | `file:./dev.db` |
 | `NEXTAUTH_SECRET` | Secret for JWT tokens | **Required** |
 | `NEXTAUTH_URL` | Application URL | `http://localhost:3000` |
 | `NEXT_PUBLIC_APP_NAME` | App name shown in UI | `Smart Tabula` |
+
+### Database Configuration
+
+Smart Tabula supports multiple databases via Prisma 7 adapters:
+
+| Database | `DATABASE_URL` Example |
+|----------|------------------------|
+| SQLite (default) | `file:./dev.db` or `file:/path/to/database.sqlite` |
+| PostgreSQL | `postgresql://user:password@localhost:5432/smarttabula` |
+
+**Note**: MySQL support is planned for future releases when official Prisma adapters become available.
 
 Generate a secure secret:
 ```bash
@@ -203,6 +214,18 @@ The application uses the following main entities:
 - **Absence** - Scheduled absences (vacation, sick, remote)
 - **SkipMeal** - Single-day meal skips
 - **Notification** - System notifications
+
+### Multi-Database Support
+
+Smart Tabula uses Prisma 7 with database-specific adapters:
+
+- **SQLite**: `@prisma/adapter-better-sqlite3` with `better-sqlite3`
+- **PostgreSQL**: `@prisma/adapter-pg` with `pg`
+
+The database type is automatically detected from the `DATABASE_URL` format. Configuration is handled in:
+- `prisma.config.ts` - Prisma CLI configuration
+- `src/lib/db.ts` - Database type detection and adapter creation
+- `src/lib/prisma.ts` - Async Prisma client initialization
 
 ## Contributing
 

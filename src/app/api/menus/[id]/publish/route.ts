@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -17,6 +17,7 @@ export async function POST(
 
     const { id } = await params;
 
+    const prisma = await getPrisma();
     const menu = await prisma.menu.findUnique({
       where: { id },
       include: {

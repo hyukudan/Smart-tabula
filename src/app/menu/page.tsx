@@ -2,9 +2,10 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { MenuView } from "./menu-view";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 async function getMenuData(userId: string) {
+  const prisma = await getPrisma();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

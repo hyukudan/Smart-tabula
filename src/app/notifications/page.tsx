@@ -2,9 +2,10 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { NotificationsView } from "./notifications-view";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 async function getNotificationsData(userId: string) {
+  const prisma = await getPrisma();
   const notifications = await prisma.notification.findMany({
     where: { userId },
     orderBy: { createdAt: "desc" },

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 async function getDashboardData(userId: string) {
+  const prisma = await getPrisma();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
