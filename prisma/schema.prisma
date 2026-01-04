@@ -2,9 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Database provider - URL configured in prisma.config.ts
+// Supports: SQLite (default), PostgreSQL
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 // Usuarios del sistema

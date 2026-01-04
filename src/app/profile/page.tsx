@@ -2,9 +2,10 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { ProfileForm } from "./profile-form";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 async function getProfileData(userId: string) {
+  const prisma = await getPrisma();
   const [user, allAllergies] = await Promise.all([
     prisma.user.findUnique({
       where: { id: userId },

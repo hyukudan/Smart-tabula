@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener skip meals del usuario
 export async function GET() {
@@ -10,6 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
+    const prisma = await getPrisma();
     const skipMeals = await prisma.skipMeal.findMany({
       where: { userId: session.user.id },
       orderBy: { date: "desc" },
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
     const skipDate = new Date(date);
     skipDate.setHours(0, 0, 0, 0);
 
+    const prisma = await getPrisma();
     // Check if already exists
     const existing = await prisma.skipMeal.findFirst({
       where: {

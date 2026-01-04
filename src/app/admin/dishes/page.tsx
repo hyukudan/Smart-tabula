@@ -2,9 +2,10 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { DishesList } from "./dishes-list";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 async function getDishesData() {
+  const prisma = await getPrisma();
   const [dishes, allergies] = await Promise.all([
     prisma.dish.findMany({
       include: {

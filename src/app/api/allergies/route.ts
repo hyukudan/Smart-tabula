@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener todos los alérgenos
 export async function GET() {
@@ -10,6 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
+    const prisma = await getPrisma();
     const allergies = await prisma.allergy.findMany({
       orderBy: { name: "asc" },
     });
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const prisma = await getPrisma();
     const existing = await prisma.allergy.findUnique({
       where: { name },
     });

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener perfil del usuario actual
 export async function GET() {
@@ -10,6 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
+    const prisma = await getPrisma();
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
       include: {
@@ -50,6 +51,7 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const { name, department, allergies, preferences } = body;
 
+    const prisma = await getPrisma();
     // Update user basic info
     await prisma.user.update({
       where: { id: session.user.id },

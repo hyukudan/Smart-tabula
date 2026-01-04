@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // POST - Marcar todas las notificaciones como leídas
 export async function POST() {
@@ -10,6 +10,7 @@ export async function POST() {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
+    const prisma = await getPrisma();
     await prisma.notification.updateMany({
       where: {
         userId: session.user.id,

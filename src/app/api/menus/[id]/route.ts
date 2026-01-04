@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // GET - Obtener menú específico
 export async function GET(
@@ -15,6 +15,7 @@ export async function GET(
 
     const { id } = await params;
 
+    const prisma = await getPrisma();
     const menu = await prisma.menu.findUnique({
       where: { id },
       include: {
@@ -75,6 +76,7 @@ export async function PUT(
     const body = await request.json();
     const { name, description, date, dishIds } = body;
 
+    const prisma = await getPrisma();
     const existingMenu = await prisma.menu.findUnique({
       where: { id },
     });
@@ -141,6 +143,7 @@ export async function DELETE(
 
     const { id } = await params;
 
+    const prisma = await getPrisma();
     const existingMenu = await prisma.menu.findUnique({
       where: { id },
       include: {

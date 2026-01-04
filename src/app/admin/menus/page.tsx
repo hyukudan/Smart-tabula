@@ -2,9 +2,10 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { MenusList } from "./menus-list";
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 async function getMenusData() {
+  const prisma = await getPrisma();
   const menus = await prisma.menu.findMany({
     include: {
       dishes: {
