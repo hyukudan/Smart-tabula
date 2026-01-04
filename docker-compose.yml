@@ -1,3 +1,6 @@
+# Smart Tabula - Docker Compose (SQLite)
+# For PostgreSQL, use: docker-compose -f docker-compose.postgres.yml up
+
 services:
   app:
     build:
@@ -10,7 +13,8 @@ services:
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-your-super-secret-key-change-in-production}
       - NEXTAUTH_URL=http://localhost:3000
       - NEXT_PUBLIC_APP_NAME=Smart Tabula
-      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - ORDER_DEADLINE=${ORDER_DEADLINE:-10:00}
+      - TZ=${TZ:-Europe/Madrid}
     volumes:
       - smart-tabula-data:/app/data
     restart: unless-stopped

@@ -13,7 +13,10 @@ Smart Tabula is a comprehensive solution for managing daily menus, food orders, 
 - **Dietary Preferences** - Set preferences (Vegetarian, Vegan, Halal, Kosher, etc.)
 - **Absence Calendar** - Register vacations, sick days, or remote work
 - **Skip Meal** - Mark specific days when not using the cafeteria
+- **Recurring Absences** - Set recurring patterns (e.g., "Never eat on Fridays")
+- **Dish Ratings** - Rate and review dishes (1-5 stars with comments)
 - **Notifications** - Receive alerts when new menus are published
+- **Multi-language** - Switch between English and Spanish
 
 ### For Administrators
 - **Dashboard** - Real-time statistics on orders, revenue, and popular dishes
@@ -23,10 +26,19 @@ Smart Tabula is a comprehensive solution for managing daily menus, food orders, 
 - **Allergen Database** - Manage the 14 EU mandatory allergens
 - **Order Overview** - Track daily orders and confirm/complete them
 
+### For Kitchen Staff
+- **Kitchen View** - See all orders grouped by dish for efficient preparation
+- **Allergy Alerts** - View customer allergies for each order
+- **CSV Export** - Export orders as summary or detailed reports
+- **Order Statistics** - Track pending, confirmed, and completed orders
+
 ### Technical Features
 - **RESTful API** - Full API for external integrations (CRM, ERP, etc.)
-- **Role-based Access** - Admin and Employee roles with appropriate permissions
+- **Role-based Access** - Admin, Employee, and Kitchen roles with appropriate permissions
+- **Order Deadline** - Configurable order cut-off time
 - **Health Check** - Built-in endpoint for monitoring (`/api/health`)
+- **Multi-Database** - SQLite (default) or PostgreSQL
+- **Internationalization** - Multi-language support (English, Spanish)
 - **100% Local** - No cloud dependencies, runs entirely on your infrastructure
 
 ## Tech Stack
@@ -40,6 +52,7 @@ Smart Tabula is a comprehensive solution for managing daily menus, food orders, 
 | Database | SQLite / PostgreSQL (via Prisma 7) |
 | Authentication | NextAuth.js v5 |
 | State Management | TanStack Query |
+| Internationalization | next-intl |
 | Containerization | Docker + Docker Compose |
 
 ## Quick Start
@@ -74,6 +87,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Docker Deployment
 
+#### With SQLite (default)
+
 ```bash
 # Build and start
 docker-compose up -d
@@ -83,6 +98,19 @@ docker-compose logs -f app
 
 # Stop
 docker-compose down
+```
+
+#### With PostgreSQL
+
+```bash
+# Build and start with PostgreSQL
+docker-compose -f docker-compose.postgres.yml up -d
+
+# View logs
+docker-compose -f docker-compose.postgres.yml logs -f
+
+# Stop
+docker-compose -f docker-compose.postgres.yml down
 ```
 
 ## Default Credentials
@@ -95,13 +123,74 @@ After running `npm run db:seed`:
 
 > **Important**: Change the admin password immediately in production!
 
+## User Workflows
+
+### Employee Ordering Flow
+
+1. **Login** - Employee logs in with their credentials
+2. **View Menu** - Navigate to "Today's Menu" to see available dishes
+3. **Check Deadline** - Verify orders are still open (before deadline time)
+4. **Select Dishes** - Choose dishes from each category (starter, main, side, dessert, drink)
+5. **Review Allergies** - System warns if any dish contains registered allergens
+6. **Place Order** - Confirm the order
+7. **Receive Confirmation** - Order status changes to "PENDING"
+8. **Order Confirmed** - Admin/Kitchen confirms the order, status changes to "CONFIRMED"
+
+### Admin Menu Management Flow
+
+1. **Create Dishes** - Go to Admin > Dishes and add new dishes with:
+   - Name, description, category
+   - Price and calories
+   - Allergens and tags (vegetarian, spicy, etc.)
+2. **Create Menu** - Go to Admin > Menus and create a new menu:
+   - Set the date
+   - Add dishes to the menu
+   - Save as draft
+3. **Publish Menu** - When ready, publish the menu
+   - All employees receive a notification
+   - Orders open immediately
+4. **Monitor Orders** - View incoming orders in Admin > Orders
+5. **Confirm Orders** - Confirm orders for kitchen preparation
+
+### Kitchen Preparation Flow
+
+1. **Access Kitchen View** - Kitchen staff login and access /kitchen
+2. **View Today's Orders** - See all orders grouped by dish:
+   - Total quantity per dish
+   - Customer names and departments
+   - Special notes and allergy alerts
+3. **Prepare Dishes** - Cook based on quantities shown
+4. **Handle Allergies** - Red badges highlight customers with allergies
+5. **Export Orders** - Download CSV for external tracking:
+   - Summary: Dish quantities only
+   - Detailed: Full order information with customer details
+
+### Absence Management Flow
+
+1. **Schedule Absence** - Go to Absences and click "Add Absence"
+   - Select start and end dates
+   - Choose reason (Vacation, Sick, Remote, Other)
+   - Add optional notes
+2. **Set Recurring Patterns** - For regular patterns:
+   - Go to "Recurring Absences"
+   - Select day of week (e.g., Friday)
+   - Choose meal (Breakfast, Lunch, Dinner)
+   - System will automatically skip these days
+3. **Skip Single Day** - For one-off skips:
+   - Use "Skip Meal" for a specific date
+   - No order will be expected for that day
+
 ## Project Structure
 
 ```
 smart-tabula/
 ├── prisma/
+│   ├── prisma.config.ts   # Multi-database configuration
 │   ├── schema.prisma      # Database schema
 │   └── seed.ts            # Initial data (allergies, dishes, admin)
+├── messages/
+│   ├── en.json            # English translations
+│   └── es.json            # Spanish translations
 ├── src/
 │   ├── app/
 │   │   ├── api/           # API routes
@@ -109,21 +198,33 @@ smart-tabula/
 │   │   │   ├── menus/     # Menu CRUD + publish
 │   │   │   ├── dishes/    # Dish management
 │   │   │   ├── orders/    # Order handling
+│   │   │   ├── kitchen/   # Kitchen view + export
+│   │   │   ├── ratings/   # Dish ratings
 │   │   │   ├── absences/  # Absence management
+│   │   │   ├── recurring-absences/  # Recurring patterns
+│   │   │   ├── order-deadline/      # Deadline check
 │   │   │   └── ...
 │   │   ├── admin/         # Admin dashboard pages
+│   │   ├── kitchen/       # Kitchen view page
 │   │   ├── dashboard/     # Employee dashboard
 │   │   ├── menu/          # Menu view + ordering
 │   │   ├── profile/       # User profile + allergies
 │   │   └── ...
 │   ├── components/
 │   │   ├── layout/        # Sidebar, Header, etc.
+│   │   ├── language-switcher.tsx  # Language toggle
 │   │   └── ui/            # shadcn/ui components
+│   ├── i18n/
+│   │   ├── config.ts      # i18n configuration
+│   │   └── request.ts     # next-intl setup
 │   ├── lib/
 │   │   ├── auth/          # NextAuth configuration
-│   │   └── prisma.ts      # Prisma client
+│   │   ├── db.ts          # Database adapter factory
+│   │   ├── prisma.ts      # Prisma client
+│   │   └── order-deadline.ts  # Deadline utilities
 │   └── types/             # TypeScript types & enums
-├── docker-compose.yml
+├── docker-compose.yml           # SQLite deployment
+├── docker-compose.postgres.yml  # PostgreSQL deployment
 ├── Dockerfile
 └── package.json
 ```
@@ -146,7 +247,13 @@ smart-tabula/
 | `POST` | `/api/absences` | Register absence |
 | `DELETE` | `/api/absences/:id` | Cancel absence |
 | `POST` | `/api/skip-meals` | Mark day as "not eating" |
+| `GET` | `/api/recurring-absences` | Get recurring patterns |
+| `POST` | `/api/recurring-absences` | Create recurring absence |
+| `DELETE` | `/api/recurring-absences?id=` | Delete recurring pattern |
+| `GET` | `/api/ratings?dishId=` | Get dish ratings |
+| `POST` | `/api/ratings` | Rate a dish (1-5 stars) |
 | `GET` | `/api/notifications` | Get notifications |
+| `GET` | `/api/order-deadline` | Check order deadline status |
 | `GET` | `/api/health` | Health check |
 
 ### Admin Endpoints
@@ -162,6 +269,17 @@ smart-tabula/
 | `DELETE` | `/api/dishes/:id` | Delete/deactivate dish |
 | `POST` | `/api/allergies` | Create allergen |
 
+### Kitchen Endpoints (Admin & Kitchen roles)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/kitchen/orders?date=` | Get orders grouped by dish |
+| `GET` | `/api/kitchen/export?date=&type=` | Export orders as CSV |
+
+**Export types:**
+- `summary` - Dish, Category, Quantity
+- `detailed` - Full order info with customer details
+
 ## Environment Variables
 
 | Variable | Description | Default |
@@ -170,6 +288,8 @@ smart-tabula/
 | `NEXTAUTH_SECRET` | Secret for JWT tokens | **Required** |
 | `NEXTAUTH_URL` | Application URL | `http://localhost:3000` |
 | `NEXT_PUBLIC_APP_NAME` | App name shown in UI | `Smart Tabula` |
+| `ORDER_DEADLINE` | Order cut-off time (HH:MM) | `10:00` |
+| `TZ` | Timezone for deadline | `Europe/Madrid` |
 
 ### Database Configuration
 
@@ -186,6 +306,49 @@ Generate a secure secret:
 ```bash
 openssl rand -base64 32
 ```
+
+## Order Deadline System
+
+The order deadline system prevents orders after a configurable cut-off time:
+
+**Configuration:**
+```env
+ORDER_DEADLINE=10:00  # Orders close at 10:00 AM
+TZ=Europe/Madrid      # Timezone for deadline
+```
+
+**Behavior:**
+- Orders for TODAY are blocked after the deadline
+- Orders for FUTURE dates are always allowed
+- Orders for PAST dates are never allowed
+
+**API Response (`/api/order-deadline`):**
+```json
+{
+  "deadline": "10:00",
+  "allowed": true,
+  "remaining": "2h 30m",
+  "forDate": "2024-01-15"
+}
+```
+
+## Multi-Language Support
+
+Smart Tabula supports multiple languages with next-intl:
+
+**Available languages:**
+- English (default)
+- Spanish (Espa~ol)
+
+**Switching language:**
+- Click the globe icon in the header
+- Select your preferred language
+- Preference is saved in a cookie
+
+**Adding new languages:**
+1. Create `messages/[locale].json` with translations
+2. Add locale to `src/i18n/config.ts`
+3. Rebuild the application
 
 ## Available Scripts
 
@@ -204,16 +367,28 @@ openssl rand -base64 32
 
 The application uses the following main entities:
 
-- **User** - Employees and administrators
+- **User** - Employees and administrators (roles: ADMIN, EMPLOYEE, KITCHEN)
 - **Allergy** - EU mandatory allergens (14 types)
 - **UserAllergy** - User's registered allergies with severity
 - **UserPreference** - Dietary preferences (vegetarian, vegan, etc.)
 - **Menu** - Daily menus with publication status
 - **Dish** - Food items with categories, tags, and allergens
+- **DishRating** - User ratings for dishes (1-5 stars with comments)
 - **Order** - User orders with status tracking
+- **OrderItem** - Individual items in an order
 - **Absence** - Scheduled absences (vacation, sick, remote)
+- **RecurringAbsence** - Weekly recurring patterns
 - **SkipMeal** - Single-day meal skips
 - **Notification** - System notifications
+- **SystemConfig** - Application settings
+
+### User Roles
+
+| Role | Description | Access |
+|------|-------------|--------|
+| EMPLOYEE | Regular users | Menu, orders, profile, absences |
+| KITCHEN | Kitchen staff | Employee access + kitchen view |
+| ADMIN | Administrators | Full access to all features |
 
 ### Multi-Database Support
 
@@ -226,6 +401,32 @@ The database type is automatically detected from the `DATABASE_URL` format. Conf
 - `prisma.config.ts` - Prisma CLI configuration
 - `src/lib/db.ts` - Database type detection and adapter creation
 - `src/lib/prisma.ts` - Async Prisma client initialization
+
+## Health Check
+
+The `/api/health` endpoint provides comprehensive system status:
+
+```json
+{
+  "status": "healthy",
+  "version": "1.0.0",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "database": {
+    "status": "connected",
+    "type": "sqlite",
+    "responseTime": "5ms"
+  },
+  "stats": {
+    "users": 25,
+    "menus": 120,
+    "orders": 1500
+  },
+  "config": {
+    "orderDeadline": "10:00",
+    "timezone": "Europe/Madrid"
+  }
+}
+```
 
 ## Contributing
 
@@ -241,4 +442,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-Built with ❤️ using Next.js, Prisma, and shadcn/ui
+Built with Next.js, Prisma, and shadcn/ui

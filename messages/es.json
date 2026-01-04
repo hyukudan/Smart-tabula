@@ -1,0 +1,227 @@
+{
+  "common": {
+    "appName": "Smart Tabula",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "create": "Crear",
+    "update": "Actualizar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "viewAll": "Ver todo",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "yes": "Sí",
+    "no": "No",
+    "confirm": "Confirmar",
+    "success": "Éxito",
+    "error": "Error",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "name": "Nombre",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "loginSuccess": "Sesión iniciada correctamente",
+    "loginError": "Credenciales inválidas",
+    "logoutSuccess": "Sesión cerrada correctamente"
+  },
+  "navigation": {
+    "dashboard": "Inicio",
+    "menu": "Menú del día",
+    "profile": "Perfil",
+    "notifications": "Notificaciones",
+    "absences": "Ausencias",
+    "admin": "Administración",
+    "kitchen": "Cocina"
+  },
+  "dashboard": {
+    "title": "Inicio",
+    "welcome": "Bienvenido, {name}",
+    "todaysMenu": "Menú de hoy",
+    "myOrders": "Mis pedidos",
+    "upcomingAbsences": "Próximas ausencias",
+    "recentNotifications": "Notificaciones recientes",
+    "noMenuToday": "No hay menú disponible para hoy",
+    "noOrders": "Aún no hay pedidos",
+    "noAbsences": "No hay ausencias programadas",
+    "noNotifications": "Sin notificaciones"
+  },
+  "menu": {
+    "title": "Menú del día",
+    "date": "Fecha",
+    "category": {
+      "STARTER": "Entrantes",
+      "MAIN": "Platos principales",
+      "SIDE": "Acompañamientos",
+      "DESSERT": "Postres",
+      "DRINK": "Bebidas"
+    },
+    "placeOrder": "Hacer pedido",
+    "modifyOrder": "Modificar pedido",
+    "cancelOrder": "Cancelar pedido",
+    "orderPlaced": "Pedido realizado correctamente",
+    "orderCancelled": "Pedido cancelado",
+    "noMenuAvailable": "No hay menú disponible para esta fecha",
+    "orderDeadline": "Hora límite de pedido",
+    "ordersClosed": "Los pedidos están cerrados para hoy",
+    "timeRemaining": "Tiempo restante"
+  },
+  "orders": {
+    "title": "Pedidos",
+    "status": {
+      "PENDING": "Pendiente",
+      "CONFIRMED": "Confirmado",
+      "CANCELLED": "Cancelado",
+      "COMPLETED": "Completado"
+    },
+    "totalOrders": "Pedidos totales",
+    "totalPortions": "Raciones totales",
+    "notes": "Notas",
+    "quantity": "Cantidad"
+  },
+  "kitchen": {
+    "title": "Vista de cocina",
+    "orders": "Pedidos de cocina",
+    "exportSummary": "Exportar resumen",
+    "exportDetails": "Exportar detalles",
+    "totalOrders": "Pedidos totales",
+    "pending": "Pendientes",
+    "confirmed": "Confirmados",
+    "withAllergies": "Con alergias",
+    "awaitingConfirmation": "Esperando confirmación",
+    "readyToPrepare": "Listos para preparar",
+    "needsAttention": "Pedidos que requieren atención especial",
+    "noOrders": "Sin pedidos para hoy",
+    "noOrdersDescription": "No hay pedidos para esta fecha. Los pedidos aparecerán aquí cuando los usuarios los realicen."
+  },
+  "absences": {
+    "title": "Ausencias",
+    "scheduled": "Ausencias programadas",
+    "recurring": "Ausencias recurrentes",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "reason": "Motivo",
+    "reasons": {
+      "VACATION": "Vacaciones",
+      "SICK": "Enfermedad",
+      "REMOTE": "Teletrabajo",
+      "OTHER": "Otro"
+    },
+    "dayOfWeek": {
+      "0": "Domingo",
+      "1": "Lunes",
+      "2": "Martes",
+      "3": "Miércoles",
+      "4": "Jueves",
+      "5": "Viernes",
+      "6": "Sábado"
+    },
+    "meal": {
+      "BREAKFAST": "Desayuno",
+      "LUNCH": "Comida",
+      "DINNER": "Cena"
+    },
+    "addAbsence": "Añadir ausencia",
+    "addRecurring": "Añadir ausencia recurrente",
+    "noAbsences": "No hay ausencias programadas"
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Información personal",
+    "allergies": "Alergias",
+    "preferences": "Preferencias",
+    "department": "Departamento",
+    "changePassword": "Cambiar contraseña",
+    "updateProfile": "Actualizar perfil",
+    "profileUpdated": "Perfil actualizado correctamente"
+  },
+  "admin": {
+    "title": "Administración",
+    "dashboard": "Panel de administración",
+    "users": "Usuarios",
+    "menus": "Menús",
+    "dishes": "Platos",
+    "orders": "Pedidos",
+    "statistics": "Estadísticas",
+    "settings": "Configuración",
+    "createMenu": "Crear menú",
+    "noMenuToday": "Sin menú para hoy",
+    "noMenuTodayDescription": "No hay ningún menú publicado para hoy. Los empleados no podrán hacer pedidos.",
+    "createMenuToday": "Crear menú para hoy",
+    "ordersToday": "Pedidos hoy",
+    "pendingToConfirm": "pendientes de confirmar",
+    "activeDishes": "Platos activos",
+    "availableForMenus": "Disponibles para menús",
+    "monthlyRevenue": "Ingresos del mes",
+    "ordersThisMonth": "pedidos este mes",
+    "withAllergies": "con alergias registradas",
+    "todaysMenuTitle": "Menú de hoy",
+    "published": "Publicado",
+    "draft": "Borrador",
+    "ordersPlaced": "pedidos realizados",
+    "noMenuConfigured": "No hay menú configurado para hoy",
+    "mostOrdered": "Platos más pedidos",
+    "noOrdersData": "Aún no hay datos de pedidos",
+    "quickActions": "Acciones rápidas",
+    "manageMenus": "Gestionar menús",
+    "manageDishes": "Gestionar platos",
+    "viewOrders": "Ver pedidos",
+    "manageUsers": "Gestionar usuarios"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "markAsRead": "Marcar como leída",
+    "markAllAsRead": "Marcar todas como leídas",
+    "noNotifications": "Sin notificaciones",
+    "types": {
+      "MENU_PUBLISHED": "Menú publicado",
+      "ORDER_CONFIRMED": "Pedido confirmado",
+      "REMINDER": "Recordatorio",
+      "SYSTEM": "Sistema"
+    }
+  },
+  "ratings": {
+    "title": "Valoraciones",
+    "rate": "Valorar",
+    "yourRating": "Tu valoración",
+    "averageRating": "Valoración media",
+    "noRatings": "Sin valoraciones",
+    "rateThisDish": "Valorar este plato",
+    "comment": "Comentario (opcional)"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "theme": "Tema",
+    "themes": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    }
+  },
+  "errors": {
+    "unauthorized": "No autorizado",
+    "notFound": "No encontrado",
+    "serverError": "Error del servidor",
+    "networkError": "Error de red",
+    "validationError": "Error de validación"
+  },
+  "time": {
+    "timeExpired": "Tiempo agotado",
+    "minutes": "minutos",
+    "hours": "horas"
+  }
+}

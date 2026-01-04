@@ -8,28 +8,30 @@ datasource db {
   provider = "sqlite"
 }
 
-// Usuarios del sistema
+// System users
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
   password      String
   name          String
-  role          String    @default("EMPLOYEE") // ADMIN, EMPLOYEE
+  role          String    @default("EMPLOYEE") // ADMIN, EMPLOYEE, KITCHEN
   department    String?
   avatar        String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  // Relaciones
-  allergies     UserAllergy[]
-  preferences   UserPreference[]
-  absences      Absence[]
-  orders        Order[]
-  notifications Notification[]
-  skipMeals     SkipMeal[]
+  // Relations
+  allergies          UserAllergy[]
+  preferences        UserPreference[]
+  absences           Absence[]
+  orders             Order[]
+  notifications      Notification[]
+  skipMeals          SkipMeal[]
+  ratings            DishRating[]
+  recurringAbsences  RecurringAbsence[]
 }
 
-// Alergias/intolerancias de usuarios
+// User allergies/intolerances
 model Allergy {
   id          String        @id @default(cuid())
   name        String        @unique
@@ -52,7 +54,7 @@ model UserAllergy {
   @@unique([userId, allergyId])
 }
 
-// Preferencias alimentarias
+// User dietary preferences
 model UserPreference {
   id        String   @id @default(cuid())
   userId    String
@@ -64,12 +66,12 @@ model UserPreference {
   @@unique([userId, type])
 }
 
-// Menús semanales/diarios
+// Weekly/daily menus
 model Menu {
   id          String    @id @default(cuid())
   name        String
   description String?
-  date        DateTime  // Fecha del menú
+  date        DateTime  // Menu date
   weekNumber  Int?
   year        Int?
   isPublished Boolean   @default(false)
@@ -81,7 +83,7 @@ model Menu {
   orders      Order[]
 }
 
-// Platos disponibles
+// Available dishes
 model Dish {
   id          String        @id @default(cuid())
   name        String
@@ -98,14 +100,15 @@ model Dish {
   allergies   DishAllergy[]
   orderItems  OrderItem[]
   tags        DishTag[]
+  ratings     DishRating[]
 }
 
-// Relación platos-menús
+// Menu-Dish relationship
 model MenuDish {
   id       String @id @default(cuid())
   menuId   String
   dishId   String
-  position Int    @default(0) // Orden de aparición
+  position Int    @default(0) // Display order
 
   menu     Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
   dish     Dish   @relation(fields: [dishId], references: [id], onDelete: Cascade)
@@ -113,7 +116,7 @@ model MenuDish {
   @@unique([menuId, dishId])
 }
 
-// Alérgenos en platos
+// Dish allergens
 model DishAllergy {
   id        String  @id @default(cuid())
   dishId    String
@@ -125,7 +128,7 @@ model DishAllergy {
   @@unique([dishId, allergyId])
 }
 
-// Etiquetas de platos (vegetariano, picante, etc.)
+// Dish tags (vegetarian, spicy, etc.)
 model DishTag {
   id      String @id @default(cuid())
   dishId  String
@@ -136,12 +139,12 @@ model DishTag {
   @@unique([dishId, tag])
 }
 
-// Pedidos
+// Orders
 model Order {
   id          String      @id @default(cuid())
   userId      String
   menuId      String
-  date        DateTime    // Fecha del pedido
+  date        DateTime    // Order date
   status      String      @default("PENDING") // PENDING, CONFIRMED, CANCELLED, COMPLETED
   notes       String?
   totalPrice  Float       @default(0)
@@ -155,7 +158,7 @@ model Order {
   @@unique([userId, menuId, date])
 }
 
-// Items de pedidos
+// Order items
 model OrderItem {
   id       String @id @default(cuid())
   orderId  String
@@ -167,7 +170,7 @@ model OrderItem {
   dish     Dish   @relation(fields: [dishId], references: [id], onDelete: Cascade)
 }
 
-// Ausencias programadas
+// Scheduled absences
 model Absence {
   id        String   @id @default(cuid())
   userId    String
@@ -180,7 +183,7 @@ model Absence {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// Días que no come (sin ausencia completa)
+// Skip meal days (without full absence)
 model SkipMeal {
   id        String   @id @default(cuid())
   userId    String
@@ -194,7 +197,7 @@ model SkipMeal {
   @@unique([userId, date, meal])
 }
 
-// Notificaciones
+// Notifications
 model Notification {
   id        String   @id @default(cuid())
   userId    String
@@ -208,10 +211,41 @@ model Notification {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// Configuración del sistema
+// System configuration
 model SystemConfig {
   id        String   @id @default(cuid())
   key       String   @unique
   value     String
   updatedAt DateTime @updatedAt
+}
+
+// Dish ratings
+model DishRating {
+  id        String   @id @default(cuid())
+  userId    String
+  dishId    String
+  rating    Int      // 1-5 stars
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dish      Dish     @relation(fields: [dishId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dishId])
+}
+
+// Recurring absences (e.g., "never eat on Fridays")
+model RecurringAbsence {
+  id        String   @id @default(cuid())
+  userId    String
+  dayOfWeek Int      // 0=Sunday, 1=Monday, ..., 6=Saturday
+  meal      String   @default("LUNCH") // BREAKFAST, LUNCH, DINNER
+  reason    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dayOfWeek, meal])
 }

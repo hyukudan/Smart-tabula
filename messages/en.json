@@ -1,0 +1,227 @@
+{
+  "common": {
+    "appName": "Smart Tabula",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "viewAll": "View all",
+    "back": "Back",
+    "next": "Next",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "name": "Name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginSuccess": "Logged in successfully",
+    "loginError": "Invalid credentials",
+    "logoutSuccess": "Logged out successfully"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "menu": "Today's Menu",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "absences": "Absences",
+    "admin": "Administration",
+    "kitchen": "Kitchen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}",
+    "todaysMenu": "Today's Menu",
+    "myOrders": "My Orders",
+    "upcomingAbsences": "Upcoming Absences",
+    "recentNotifications": "Recent Notifications",
+    "noMenuToday": "No menu available for today",
+    "noOrders": "No orders yet",
+    "noAbsences": "No upcoming absences",
+    "noNotifications": "No notifications"
+  },
+  "menu": {
+    "title": "Today's Menu",
+    "date": "Date",
+    "category": {
+      "STARTER": "Starters",
+      "MAIN": "Main Courses",
+      "SIDE": "Side Dishes",
+      "DESSERT": "Desserts",
+      "DRINK": "Drinks"
+    },
+    "placeOrder": "Place Order",
+    "modifyOrder": "Modify Order",
+    "cancelOrder": "Cancel Order",
+    "orderPlaced": "Order placed successfully",
+    "orderCancelled": "Order cancelled",
+    "noMenuAvailable": "No menu available for this date",
+    "orderDeadline": "Order deadline",
+    "ordersClosed": "Orders are closed for today",
+    "timeRemaining": "Time remaining"
+  },
+  "orders": {
+    "title": "Orders",
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "totalOrders": "Total Orders",
+    "totalPortions": "Total Portions",
+    "notes": "Notes",
+    "quantity": "Quantity"
+  },
+  "kitchen": {
+    "title": "Kitchen View",
+    "orders": "Kitchen Orders",
+    "exportSummary": "Export Summary",
+    "exportDetails": "Export Details",
+    "totalOrders": "Total Orders",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "withAllergies": "With Allergies",
+    "awaitingConfirmation": "Awaiting confirmation",
+    "readyToPrepare": "Ready to prepare",
+    "needsAttention": "Orders need special attention",
+    "noOrders": "No orders for today",
+    "noOrdersDescription": "There are no orders placed for this date. Orders will appear here once users start placing them."
+  },
+  "absences": {
+    "title": "Absences",
+    "scheduled": "Scheduled Absences",
+    "recurring": "Recurring Absences",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "reason": "Reason",
+    "reasons": {
+      "VACATION": "Vacation",
+      "SICK": "Sick leave",
+      "REMOTE": "Remote work",
+      "OTHER": "Other"
+    },
+    "dayOfWeek": {
+      "0": "Sunday",
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday"
+    },
+    "meal": {
+      "BREAKFAST": "Breakfast",
+      "LUNCH": "Lunch",
+      "DINNER": "Dinner"
+    },
+    "addAbsence": "Add Absence",
+    "addRecurring": "Add Recurring Absence",
+    "noAbsences": "No absences scheduled"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "allergies": "Allergies",
+    "preferences": "Preferences",
+    "department": "Department",
+    "changePassword": "Change Password",
+    "updateProfile": "Update Profile",
+    "profileUpdated": "Profile updated successfully"
+  },
+  "admin": {
+    "title": "Administration",
+    "dashboard": "Admin Dashboard",
+    "users": "Users",
+    "menus": "Menus",
+    "dishes": "Dishes",
+    "orders": "Orders",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "createMenu": "Create Menu",
+    "noMenuToday": "No menu for today",
+    "noMenuTodayDescription": "No menu is published for today. Employees will not be able to place orders.",
+    "createMenuToday": "Create menu for today",
+    "ordersToday": "Orders today",
+    "pendingToConfirm": "pending to confirm",
+    "activeDishes": "Active dishes",
+    "availableForMenus": "Available for menus",
+    "monthlyRevenue": "Monthly revenue",
+    "ordersThisMonth": "orders this month",
+    "withAllergies": "with registered allergies",
+    "todaysMenuTitle": "Today's Menu",
+    "published": "Published",
+    "draft": "Draft",
+    "ordersPlaced": "orders placed",
+    "noMenuConfigured": "No menu configured for today",
+    "mostOrdered": "Most ordered dishes",
+    "noOrdersData": "No orders data yet",
+    "quickActions": "Quick actions",
+    "manageMenus": "Manage menus",
+    "manageDishes": "Manage dishes",
+    "viewOrders": "View orders",
+    "manageUsers": "Manage users"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAsRead": "Mark as read",
+    "markAllAsRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "types": {
+      "MENU_PUBLISHED": "Menu published",
+      "ORDER_CONFIRMED": "Order confirmed",
+      "REMINDER": "Reminder",
+      "SYSTEM": "System"
+    }
+  },
+  "ratings": {
+    "title": "Ratings",
+    "rate": "Rate",
+    "yourRating": "Your rating",
+    "averageRating": "Average rating",
+    "noRatings": "No ratings yet",
+    "rateThisDish": "Rate this dish",
+    "comment": "Comment (optional)"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "errors": {
+    "unauthorized": "Unauthorized",
+    "notFound": "Not found",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "validationError": "Validation error"
+  },
+  "time": {
+    "timeExpired": "Time expired",
+    "minutes": "minutes",
+    "hours": "hours"
+  }
+}

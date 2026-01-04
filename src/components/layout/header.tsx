@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Sidebar } from "./sidebar";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 interface HeaderProps {
   title?: string;
@@ -40,6 +41,9 @@ export function Header({ title }: HeaderProps) {
       {/* Spacer */}
       <div className="flex-1" />
 
+      {/* Language Switcher */}
+      <LanguageSwitcher />
+
       {/* Notifications */}
       <Link href="/notifications">
         <Button variant="ghost" size="icon" className="relative">
@@ -50,7 +54,7 @@ export function Header({ title }: HeaderProps) {
           >
             3
           </Badge>
-          <span className="sr-only">Notificaciones</span>
+          <span className="sr-only">Notifications</span>
         </Button>
       </Link>
     </header>
