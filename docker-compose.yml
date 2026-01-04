@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:/app/data/smart-tabula.db
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-your-super-secret-key-change-in-production}
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXT_PUBLIC_APP_NAME=Smart Tabula
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    volumes:
+      - smart-tabula-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  smart-tabula-data:
+    driver: local
